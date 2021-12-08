@@ -5,19 +5,17 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    result = 0
     def findTilt(self, root: Optional[TreeNode]) -> int:
+        result = 0
         def recursion(root):
+            nonlocal result
             if root is None:
                 return 0
             left = recursion(root.left)
             right = recursion(root.right)
             root.sum = abs(left-right)
+            result += root.sum
             return root.val + left + right
         recursion(root)
-        def getsum(root):
-            if root is None:
-                return 0
-            left = getsum(root.left)
-            right = getsum(root.right)
-            return root.sum + left + right
-        return getsum(root)
+        return result
