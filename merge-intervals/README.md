@@ -1,3 +1,4 @@
+[Discussion Post (created on 24/11/2021 at 11:52)](https://leetcode.com/problems/merge-intervals/discuss/1644272/Python-Simplest-Iterative-Solution)  
 <h2>56. Merge Intervals</h2><h3>Medium</h3><hr><div><p>Given an array&nbsp;of <code>intervals</code>&nbsp;where <code>intervals[i] = [start<sub>i</sub>, end<sub>i</sub>]</code>, merge all overlapping intervals, and return <em>an array of the non-overlapping intervals that cover all the intervals in the input</em>.</p>
 
 <p>&nbsp;</p>
