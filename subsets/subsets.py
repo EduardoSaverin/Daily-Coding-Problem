@@ -26,3 +26,19 @@ class Solution:
         result.append(path[:])
         for index in range(len(nums)):
             self.dfs(nums[index+1:], path + [nums[index]], result)
+
+# Solution 3 : Related to Subsets 2 PB 90         
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        def recursion(nums, start, path, result):
+            result.append(path[:])
+            for index in range(start, len(nums)):
+                # if index != start and nums[index] == nums[index-1]:
+                #     continue
+                path.append(nums[index])
+                recursion(nums, index+1, path, result)
+                path.pop()
+        result = []
+        recursion(nums, 0, [], result)
+        return result
