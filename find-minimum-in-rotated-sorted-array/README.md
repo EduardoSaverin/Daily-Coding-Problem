@@ -1,46 +1,78 @@
-<h2>153. Find Minimum in Rotated Sorted Array</h2><h3>Medium</h3><hr><div><p>Suppose an array of length <code>n</code> sorted in ascending order is <strong>rotated</strong> between <code>1</code> and <code>n</code> times. For example, the array <code>nums = [0,1,2,4,5,6,7]</code> might become:</p>
+# 153. Find Minimum in Rotated Sorted Array
 
-<ul>
-	<li><code>[4,5,6,7,0,1,2]</code> if it was rotated <code>4</code> times.</li>
-	<li><code>[0,1,2,4,5,6,7]</code> if it was rotated <code>7</code> times.</li>
-</ul>
+## Medium
 
-<p>Notice that <strong>rotating</strong> an array <code>[a[0], a[1], a[2], ..., a[n-1]]</code> 1 time results in the array <code>[a[n-1], a[0], a[1], a[2], ..., a[n-2]]</code>.</p>
+***
 
-<p>Given the sorted rotated array <code>nums</code> of <strong>unique</strong> elements, return <em>the minimum element of this array</em>.</p>
+Suppose an array of length `n` sorted in ascending order is **rotated** between `1` and `n` times. For example, the array `nums = [0,1,2,4,5,6,7]` might become:
 
-<p>You must write an algorithm that runs in&nbsp;<code>O(log n) time.</code></p>
+* `[4,5,6,7,0,1,2]` if it was rotated `4` times.
+* `[0,1,2,4,5,6,7]` if it was rotated `7` times.
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+Notice that **rotating** an array `[a[0], a[1], a[2], ..., a[n-1]]` 1 time results in the array `[a[n-1], a[0], a[1], a[2], ..., a[n-2]]`.
 
-<pre><strong>Input:</strong> nums = [3,4,5,1,2]
-<strong>Output:</strong> 1
-<strong>Explanation:</strong> The original array was [1,2,3,4,5] rotated 3 times.
-</pre>
+Given the sorted rotated array `nums` of **unique** elements, return _the minimum element of this array_.
 
-<p><strong>Example 2:</strong></p>
+You must write an algorithm that runs in `O(log n) time.`
 
-<pre><strong>Input:</strong> nums = [4,5,6,7,0,1,2]
-<strong>Output:</strong> 0
-<strong>Explanation:</strong> The original array was [0,1,2,4,5,6,7] and it was rotated 4 times.
-</pre>
+&#x20;
 
-<p><strong>Example 3:</strong></p>
+**Example 1:**
 
-<pre><strong>Input:</strong> nums = [11,13,15,17]
-<strong>Output:</strong> 11
-<strong>Explanation:</strong> The original array was [11,13,15,17] and it was rotated 4 times. 
-</pre>
+```
+Input: nums = [3,4,5,1,2]
+Output: 1
+Explanation: The original array was [1,2,3,4,5] rotated 3 times.
+```
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+**Example 2:**
 
-<ul>
-	<li><code>n == nums.length</code></li>
-	<li><code>1 &lt;= n &lt;= 5000</code></li>
-	<li><code>-5000 &lt;= nums[i] &lt;= 5000</code></li>
-	<li>All the integers of <code>nums</code> are <strong>unique</strong>.</li>
-	<li><code>nums</code> is sorted and rotated between <code>1</code> and <code>n</code> times.</li>
-</ul>
-</div>
+```
+Input: nums = [4,5,6,7,0,1,2]
+Output: 0
+Explanation: The original array was [0,1,2,4,5,6,7] and it was rotated 4 times.
+```
+
+**Example 3:**
+
+```
+Input: nums = [11,13,15,17]
+Output: 11
+Explanation: The original array was [11,13,15,17] and it was rotated 4 times. 
+```
+
+&#x20;
+
+**Constraints:**
+
+* `n == nums.length`
+* `1 <= n <= 5000`
+* `-5000 <= nums[i] <= 5000`
+* All the integers of `nums` are **unique**.
+* `nums` is sorted and rotated between `1` and `n` times.
+
+```python
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        pivot = self.findPivot(nums)
+        return nums[pivot]
+        
+    def findPivot(self, nums):
+        low = 0
+        high = len(nums) - 1
+        if low == high:
+            return low
+        elif nums[low] < nums[high]:
+            return low
+        while low <= high:
+            mid = low +(high-low)//2
+            if mid < high and nums[mid] > nums[mid+1]:
+                return mid+1
+            elif mid > low and nums[mid-1]>nums[mid]:
+                return mid
+            elif nums[mid] > nums[low]:
+                low = mid+1
+            else:
+                high = mid-1
+            
+```

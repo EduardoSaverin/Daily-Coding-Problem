@@ -1,39 +1,73 @@
-<h2>39. Combination Sum</h2><h3>Medium</h3><hr><div><p>Given an array of <strong>distinct</strong> integers <code>candidates</code> and a target integer <code>target</code>, return <em>a list of all <strong>unique combinations</strong> of </em><code>candidates</code><em> where the chosen numbers sum to </em><code>target</code><em>.</em> You may return the combinations in <strong>any order</strong>.</p>
+# 39. Combination Sum
 
-<p>The <strong>same</strong> number may be chosen from <code>candidates</code> an <strong>unlimited number of times</strong>. Two combinations are unique if the frequency of at least one of the chosen numbers is different.</p>
+## Medium
 
-<p>It is <strong>guaranteed</strong> that the number of unique combinations that sum up to <code>target</code> is less than <code>150</code> combinations for the given input.</p>
+***
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+Given an array of **distinct** integers `candidates` and a target integer `target`, return _a list of all **unique combinations** of_ `candidates` _where the chosen numbers sum to_ `target`_._ You may return the combinations in **any order**.
 
-<pre><strong>Input:</strong> candidates = [2,3,6,7], target = 7
-<strong>Output:</strong> [[2,2,3],[7]]
-<strong>Explanation:</strong>
+The **same** number may be chosen from `candidates` an **unlimited number of times**. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+
+It is **guaranteed** that the number of unique combinations that sum up to `target` is less than `150` combinations for the given input.
+
+&#x20;
+
+**Example 1:**
+
+```
+Input: candidates = [2,3,6,7], target = 7
+Output: [[2,2,3],[7]]
+Explanation:
 2 and 3 are candidates, and 2 + 2 + 3 = 7. Note that 2 can be used multiple times.
 7 is a candidate, and 7 = 7.
 These are the only two combinations.
-</pre>
+```
 
-<p><strong>Example 2:</strong></p>
+**Example 2:**
 
-<pre><strong>Input:</strong> candidates = [2,3,5], target = 8
-<strong>Output:</strong> [[2,2,2,2],[2,3,3],[3,5]]
-</pre>
+```
+Input: candidates = [2,3,5], target = 8
+Output: [[2,2,2,2],[2,3,3],[3,5]]
+```
 
-<p><strong>Example 3:</strong></p>
+**Example 3:**
 
-<pre><strong>Input:</strong> candidates = [2], target = 1
-<strong>Output:</strong> []
-</pre>
+```
+Input: candidates = [2], target = 1
+Output: []
+```
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+&#x20;
 
-<ul>
-	<li><code>1 &lt;= candidates.length &lt;= 30</code></li>
-	<li><code>1 &lt;= candidates[i] &lt;= 200</code></li>
-	<li>All elements of <code>candidates</code> are <strong>distinct</strong>.</li>
-	<li><code>1 &lt;= target &lt;= 500</code></li>
-</ul>
-</div>
+**Constraints:**
+
+* `1 <= candidates.length <= 30`
+* `1 <= candidates[i] <= 200`
+* All elements of `candidates` are **distinct**.
+* `1 <= target <= 500`
+
+
+
+**Solution**
+
+```python
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        candidates.sort()
+        result = []
+        def recursion(candidates, start, path, total, target):
+            nonlocal result
+            if target == total:
+                result.append(path[:])
+                return
+            for index in range(start, len(candidates)):
+                # if index > start and candidates[index] == candidates[index-1]:
+                #     continue
+                if total+candidates[index] > target:
+                    break
+                path.append(candidates[index])
+                recursion(candidates,index, path, total+candidates[index], target)
+                path.pop()
+        recursion(candidates,0,[],0, target)
+        return result
+```

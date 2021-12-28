@@ -1,30 +1,57 @@
-<h2>45. Jump Game II</h2><h3>Medium</h3><hr><div><p>Given an array of non-negative integers <code>nums</code>, you are initially positioned at the first index of the array.</p>
+# 45. Jump Game II
 
-<p>Each element in the array represents your maximum jump length at that position.</p>
+## Medium
 
-<p>Your goal is to reach the last index in the minimum number of jumps.</p>
+***
 
-<p>You can assume that you can always reach the last index.</p>
+Given an array of non-negative integers `nums`, you are initially positioned at the first index of the array.
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+Each element in the array represents your maximum jump length at that position.
 
-<pre><strong>Input:</strong> nums = [2,3,1,1,4]
-<strong>Output:</strong> 2
-<strong>Explanation:</strong> The minimum number of jumps to reach the last index is 2. Jump 1 step from index 0 to 1, then 3 steps to the last index.
-</pre>
+Your goal is to reach the last index in the minimum number of jumps.
 
-<p><strong>Example 2:</strong></p>
+You can assume that you can always reach the last index.
 
-<pre><strong>Input:</strong> nums = [2,3,0,1,4]
-<strong>Output:</strong> 2
-</pre>
+&#x20;
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+**Example 1:**
 
-<ul>
-	<li><code>1 &lt;= nums.length &lt;= 10<sup>4</sup></code></li>
-	<li><code>0 &lt;= nums[i] &lt;= 1000</code></li>
-</ul>
-</div>
+```
+Input: nums = [2,3,1,1,4]
+Output: 2
+Explanation: The minimum number of jumps to reach the last index is 2. Jump 1 step from index 0 to 1, then 3 steps to the last index.
+```
+
+**Example 2:**
+
+```
+Input: nums = [2,3,0,1,4]
+Output: 2
+```
+
+&#x20;
+
+**Constraints:**
+
+* `1 <= nums.length <= 104`
+* `0 <= nums[i] <= 1000`
+
+```python
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        # Trying Simple Iterative Solution
+        target = len(nums)-1
+        start,end = 0,0
+        maxJump = 0
+        count = 0
+        while end < target:
+            count += 1
+            for index in range(start, end+1):
+                maxJump = max(maxJump, index + nums[index])
+            if maxJump >= target:
+                return count
+            start = end+1
+            end = maxJump
+        return count
+            
+```

@@ -1,33 +1,59 @@
-<h2>209. Minimum Size Subarray Sum</h2><h3>Medium</h3><hr><div><p>Given an array of positive integers <code>nums</code> and a positive integer <code>target</code>, return the minimal length of a <strong>contiguous subarray</strong> <code>[nums<sub>l</sub>, nums<sub>l+1</sub>, ..., nums<sub>r-1</sub>, nums<sub>r</sub>]</code> of which the sum is greater than or equal to <code>target</code>. If there is no such subarray, return <code>0</code> instead.</p>
+# 209. Minimum Size Subarray Sum
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+## Medium
 
-<pre><strong>Input:</strong> target = 7, nums = [2,3,1,2,4,3]
-<strong>Output:</strong> 2
-<strong>Explanation:</strong> The subarray [4,3] has the minimal length under the problem constraint.
-</pre>
+***
 
-<p><strong>Example 2:</strong></p>
+Given an array of positive integers `nums` and a positive integer `target`, return the minimal length of a **contiguous subarray** `[numsl, numsl+1, ..., numsr-1, numsr]` of which the sum is greater than or equal to `target`. If there is no such subarray, return `0` instead.
 
-<pre><strong>Input:</strong> target = 4, nums = [1,4,4]
-<strong>Output:</strong> 1
-</pre>
+&#x20;
 
-<p><strong>Example 3:</strong></p>
+**Example 1:**
 
-<pre><strong>Input:</strong> target = 11, nums = [1,1,1,1,1,1,1,1]
-<strong>Output:</strong> 0
-</pre>
+```
+Input: target = 7, nums = [2,3,1,2,4,3]
+Output: 2
+Explanation: The subarray [4,3] has the minimal length under the problem constraint.
+```
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+**Example 2:**
 
-<ul>
-	<li><code>1 &lt;= target &lt;= 10<sup>9</sup></code></li>
-	<li><code>1 &lt;= nums.length &lt;= 10<sup>5</sup></code></li>
-	<li><code>1 &lt;= nums[i] &lt;= 10<sup>5</sup></code></li>
-</ul>
+```
+Input: target = 4, nums = [1,4,4]
+Output: 1
+```
 
-<p>&nbsp;</p>
-<strong>Follow up:</strong> If you have figured out the <code>O(n)</code> solution, try coding another solution of which the time complexity is <code>O(n log(n))</code>.</div>
+**Example 3:**
+
+```
+Input: target = 11, nums = [1,1,1,1,1,1,1,1]
+Output: 0
+```
+
+&#x20;
+
+**Constraints:**
+
+* `1 <= target <= 109`
+* `1 <= nums.length <= 105`
+* `1 <= nums[i] <= 105`
+
+&#x20;
+
+**Follow up:** If you have figured out the `O(n)` solution, try coding another solution of which the time complexity is `O(n log(n))`.
+
+```python
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        start = index = 0
+        total = 0
+        result = len(nums)*2 # Dummy Value
+        while index < len(nums):
+            total += nums[index]
+            while total >= target and start < len(nums):
+                result = min(result, (index-start+1))
+                total -= nums[start]
+                start+=1
+            index += 1
+        return 0 if result == len(nums)*2 else result
+```

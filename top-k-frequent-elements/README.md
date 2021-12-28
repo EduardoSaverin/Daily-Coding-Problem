@@ -1,22 +1,89 @@
-<h2>347. Top K Frequent Elements</h2><h3>Medium</h3><hr><div><p>Given an integer array <code>nums</code> and an integer <code>k</code>, return <em>the</em> <code>k</code> <em>most frequent elements</em>. You may return the answer in <strong>any order</strong>.</p>
+# 347. Top K Frequent Elements
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
-<pre><strong>Input:</strong> nums = [1,1,1,2,2,3], k = 2
-<strong>Output:</strong> [1,2]
-</pre><p><strong>Example 2:</strong></p>
-<pre><strong>Input:</strong> nums = [1], k = 1
-<strong>Output:</strong> [1]
-</pre>
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+## Medium
 
-<ul>
-	<li><code>1 &lt;= nums.length &lt;= 10<sup>5</sup></code></li>
-	<li><code>k</code> is in the range <code>[1, the number of unique elements in the array]</code>.</li>
-	<li>It is <strong>guaranteed</strong> that the answer is <strong>unique</strong>.</li>
-</ul>
+***
 
-<p>&nbsp;</p>
-<p><strong>Follow up:</strong> Your algorithm's time complexity must be better than <code>O(n log n)</code>, where n is the array's size.</p>
-</div>
+Given an integer array `nums` and an integer `k`, return _the_ `k` _most frequent elements_. You may return the answer in **any order**.
+
+&#x20;
+
+**Example 1:**
+
+```
+Input: nums = [1,1,1,2,2,3], k = 2
+Output: [1,2]
+```
+
+**Example 2:**
+
+```
+Input: nums = [1], k = 1
+Output: [1]
+```
+
+&#x20;
+
+**Constraints:**
+
+* `1 <= nums.length <= 105`
+* `k` is in the range `[1, the number of unique elements in the array]`.
+* It is **guaranteed** that the answer is **unique**.
+
+&#x20;
+
+**Follow up:** Your algorithm's time complexity must be better than `O(n log n)`, where n is the array's size.
+
+```java
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num: nums) {
+            if (map.containsKey(num)) {
+                map.put(num, map.get(num) + 1);
+            } else {
+                map.put(num , 1);
+            }
+        }
+        class Pair {
+            int num;
+            int count;
+            Pair(int num, int count) {
+                this.num = num;
+                this.count = count;
+            }
+        }
+        Comparator<Pair> comp = new Comparator<Pair>() {
+            public int compare(Pair p1, Pair p2) {
+                if (p1.count == p2.count) {
+                    return p1.num - p2.num;
+                }
+                return p1.count - p2.count;
+            }
+        };
+        PriorityQueue<Pair> queue = new PriorityQueue<Pair>(k, comp);
+        for (int num : nums) {
+            if (!map.containsKey(num)) {
+                continue;
+            }
+            Pair p = new Pair(num, map.get(num));
+            if (queue.size() < k) {
+                queue.offer(p);
+            } else {
+                Pair top = queue.peek();
+                if (top.count < p.count) {
+                    queue.poll();
+                    queue.offer(p);
+                }
+            }
+            map.remove(num);
+        }
+        int[] result = new int[k];
+        int index = 0;
+        for (Pair p : queue) {
+                result[index++] = (p.num);
+            }
+            return result;
+    }
+}
+```

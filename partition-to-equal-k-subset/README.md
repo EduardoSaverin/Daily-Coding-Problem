@@ -1,25 +1,55 @@
-<div><p>Given an integer array <code>nums</code> and an integer <code>k</code>, return <code>true</code> if it is possible to divide this array into <code>k</code> non-empty subsets whose sums are all equal.</p>
+# partition-to-equal-k-subset
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+Given an integer array `nums` and an integer `k`, return `true` if it is possible to divide this array into `k` non-empty subsets whose sums are all equal.
 
-<pre><strong>Input:</strong> nums = [4,3,2,3,5,2,1], k = 4
-<strong>Output:</strong> true
-<strong>Explanation:</strong> It's possible to divide it into 4 subsets (5), (1, 4), (2,3), (2,3) with equal sums.
-</pre>
+&#x20;
 
-<p><strong>Example 2:</strong></p>
+**Example 1:**
 
-<pre><strong>Input:</strong> nums = [1,2,3,4], k = 3
-<strong>Output:</strong> false
-</pre>
+```
+Input: nums = [4,3,2,3,5,2,1], k = 4
+Output: true
+Explanation: It's possible to divide it into 4 subsets (5), (1, 4), (2,3), (2,3) with equal sums.
+```
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+**Example 2:**
 
-<ul>
-	<li><code>1 &lt;= k &lt;= nums.length &lt;= 16</code></li>
-	<li><code>1 &lt;= nums[i] &lt;= 10<sup>4</sup></code></li>
-	<li>The frequency of each element is in the range <code>[1, 4]</code>.</li>
-</ul>
-</div>
+```
+Input: nums = [1,2,3,4], k = 3
+Output: false
+```
+
+&#x20;
+
+**Constraints:**
+
+* `1 <= k <= nums.length <= 16`
+* `1 <= nums[i] <= 104`
+* The frequency of each element is in the range `[1, 4]`.
+
+```python
+class Solution:
+    def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
+        total = sum(nums)
+        if total%k:
+            return False
+        target=total//k
+        length=len(nums)
+        used=[False]*length
+
+        def Helper(i,k,currentSum):
+            if k==0:
+                return True
+            if currentSum==target:
+                return Helper(0,k-1,0)
+            for j in range(i,length):
+                newCurrentSum=currentSum+nums[j]
+                if used[j] or newCurrentSum>target:
+                    continue
+                used[j]=True
+                if Helper(j,k,newCurrentSum):
+                    return True
+                used[j]=False
+            return False
+        return Helper(0 , k, 0)
+```

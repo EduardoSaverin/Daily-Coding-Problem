@@ -1,46 +1,89 @@
-<h2>310. Minimum Height Trees</h2><h3>Medium</h3><hr><div><p>A tree is an undirected graph in which any two vertices are connected by&nbsp;<i>exactly</i>&nbsp;one path. In other words, any connected graph without simple cycles is a tree.</p>
+# 310. Minimum Height Trees
 
-<p>Given a tree of <code>n</code> nodes&nbsp;labelled from <code>0</code> to <code>n - 1</code>, and an array of&nbsp;<code>n - 1</code>&nbsp;<code>edges</code> where <code>edges[i] = [a<sub>i</sub>, b<sub>i</sub>]</code> indicates that there is an undirected edge between the two nodes&nbsp;<code>a<sub>i</sub></code> and&nbsp;<code>b<sub>i</sub></code> in the tree,&nbsp;you can choose any node of the tree as the root. When you select a node <code>x</code> as the root, the result tree has height <code>h</code>. Among all possible rooted trees, those with minimum height (i.e. <code>min(h)</code>)&nbsp; are called <strong>minimum height trees</strong> (MHTs).</p>
+## Medium
 
-<p>Return <em>a list of all <strong>MHTs'</strong> root labels</em>.&nbsp;You can return the answer in <strong>any order</strong>.</p>
+***
 
-<p>The <strong>height</strong> of a rooted tree is the number of edges on the longest downward path between the root and a leaf.</p>
+A tree is an undirected graph in which any two vertices are connected by _exactly_ one path. In other words, any connected graph without simple cycles is a tree.
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
-<img alt="" src="https://assets.leetcode.com/uploads/2020/09/01/e1.jpg" style="width: 800px; height: 213px;">
-<pre><strong>Input:</strong> n = 4, edges = [[1,0],[1,2],[1,3]]
-<strong>Output:</strong> [1]
-<strong>Explanation:</strong> As shown, the height of the tree is 1 when the root is the node with label 1 which is the only MHT.
-</pre>
+Given a tree of `n` nodes labelled from `0` to `n - 1`, and an array of `n - 1` `edges` where `edges[i] = [ai, bi]` indicates that there is an undirected edge between the two nodes `ai` and `bi` in the tree, you can choose any node of the tree as the root. When you select a node `x` as the root, the result tree has height `h`. Among all possible rooted trees, those with minimum height (i.e. `min(h)`)  are called **minimum height trees** (MHTs).
 
-<p><strong>Example 2:</strong></p>
-<img alt="" src="https://assets.leetcode.com/uploads/2020/09/01/e2.jpg" style="width: 800px; height: 321px;">
-<pre><strong>Input:</strong> n = 6, edges = [[3,0],[3,1],[3,2],[3,4],[5,4]]
-<strong>Output:</strong> [3,4]
-</pre>
+Return _a list of all **MHTs'** root labels_. You can return the answer in **any order**.
 
-<p><strong>Example 3:</strong></p>
+The **height** of a rooted tree is the number of edges on the longest downward path between the root and a leaf.
 
-<pre><strong>Input:</strong> n = 1, edges = []
-<strong>Output:</strong> [0]
-</pre>
+&#x20;
 
-<p><strong>Example 4:</strong></p>
+**Example 1:**
 
-<pre><strong>Input:</strong> n = 2, edges = [[0,1]]
-<strong>Output:</strong> [0,1]
-</pre>
+![](https://assets.leetcode.com/uploads/2020/09/01/e1.jpg)
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+```
+Input: n = 4, edges = [[1,0],[1,2],[1,3]]
+Output: [1]
+Explanation: As shown, the height of the tree is 1 when the root is the node with label 1 which is the only MHT.
+```
 
-<ul>
-	<li><code>1 &lt;= n &lt;= 2 * 10<sup>4</sup></code></li>
-	<li><code>edges.length == n - 1</code></li>
-	<li><code>0 &lt;= a<sub>i</sub>, b<sub>i</sub> &lt; n</code></li>
-	<li><code>a<sub>i</sub> != b<sub>i</sub></code></li>
-	<li>All the pairs <code>(a<sub>i</sub>, b<sub>i</sub>)</code> are distinct.</li>
-	<li>The given input is <strong>guaranteed</strong> to be a tree and there will be <strong>no repeated</strong> edges.</li>
-</ul>
-</div>
+**Example 2:**
+
+![](https://assets.leetcode.com/uploads/2020/09/01/e2.jpg)
+
+```
+Input: n = 6, edges = [[3,0],[3,1],[3,2],[3,4],[5,4]]
+Output: [3,4]
+```
+
+**Example 3:**
+
+```
+Input: n = 1, edges = []
+Output: [0]
+```
+
+**Example 4:**
+
+```
+Input: n = 2, edges = [[0,1]]
+Output: [0,1]
+```
+
+&#x20;
+
+**Constraints:**
+
+* `1 <= n <= 2 * 104`
+* `edges.length == n - 1`
+* `0 <= ai, bi < n`
+* `ai != bi`
+* All the pairs `(ai, bi)` are distinct.
+* The given input is **guaranteed** to be a tree and there will be **no repeated** edges.
+
+```python
+from collections import defaultdict
+
+class Solution:
+    def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
+        if n == 1:
+            return [0]
+        childs = defaultdict(set)
+        degree = defaultdict(int)
+        for u,v in edges:
+            childs[u].add(v)
+            childs[v].add(u)
+            degree[u] += 1
+            degree[v] += 1
+        # Now Find Leave Nodes
+        leaves = [i for i in range(n) if degree[i] == 1]
+        # This condition because we have to reduce nodes till 2
+        while n > 2:
+            size = len(leaves)
+            n -= size
+            while size:
+                current_node = leaves.pop(0)
+                for this_node_child in childs[current_node]:
+                    degree[this_node_child] -= 1
+                    if degree[this_node_child] == 1:
+                        leaves.append(this_node_child) 
+                size -= 1
+        return leaves
+```

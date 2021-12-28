@@ -1,29 +1,65 @@
-<h2>198. House Robber</h2><h3>Medium</h3><hr><div><p>You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and <b>it will automatically contact the police if two adjacent houses were broken into on the same night</b>.</p>
+# 198. House Robber
 
-<p>Given an integer array <code>nums</code> representing the amount of money of each house, return <em>the maximum amount of money you can rob tonight <b>without alerting the police</b></em>.</p>
+## Medium
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+***
 
-<pre><strong>Input:</strong> nums = [1,2,3,1]
-<strong>Output:</strong> 4
-<strong>Explanation:</strong> Rob house 1 (money = 1) and then rob house 3 (money = 3).
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and **it will automatically contact the police if two adjacent houses were broken into on the same night**.
+
+Given an integer array `nums` representing the amount of money of each house, return _the maximum amount of money you can rob tonight **without alerting the police**_.
+
+&#x20;
+
+**Example 1:**
+
+```
+Input: nums = [1,2,3,1]
+Output: 4
+Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
 Total amount you can rob = 1 + 3 = 4.
-</pre>
+```
 
-<p><strong>Example 2:</strong></p>
+**Example 2:**
 
-<pre><strong>Input:</strong> nums = [2,7,9,3,1]
-<strong>Output:</strong> 12
-<strong>Explanation:</strong> Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
+```
+Input: nums = [2,7,9,3,1]
+Output: 12
+Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
 Total amount you can rob = 2 + 9 + 1 = 12.
-</pre>
+```
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+&#x20;
 
-<ul>
-	<li><code>1 &lt;= nums.length &lt;= 100</code></li>
-	<li><code>0 &lt;= nums[i] &lt;= 400</code></li>
-</ul>
-</div>
+**Constraints:**
+
+* `1 <= nums.length <= 100`
+* `0 <= nums[i] <= 400`
+
+```python
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 0:
+            return 0
+        elif len(nums) == 1:
+            return nums[0]
+        elif len(nums) == 2:
+            return max(nums[0], nums[1])
+        total = len(nums)
+        return max(self.robHouse1(nums[:total-1]), self.robHouse1(nums[1:total]))
+        
+    # Here I'm using my PB 198: House Robber Solution
+    def robHouse1(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+        elif len(nums) == 2:
+            return max(nums[0], nums[1])
+        length = len(nums)
+        arr = [0]*len(nums)
+        arr[0] = nums[0]
+        arr[1] = nums[1]
+        arr[2] = nums[0] + nums[2]
+        for index in range(3, len(nums)):
+            arr[index] = max(arr[index-3], arr[index-2]) + nums[index]
+        return max(arr[length-1], arr[length-2])
+        
+```

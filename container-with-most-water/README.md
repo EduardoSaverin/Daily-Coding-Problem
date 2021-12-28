@@ -1,31 +1,40 @@
-<h2>11. Container With Most Water</h2><h3>Medium</h3><hr><div><p>You are given an integer array <code>height</code> of length <code>n</code>. There are <code>n</code> vertical lines drawn such that the two endpoints of the <code>i<sup>th</sup></code> line are <code>(i, 0)</code> and <code>(i, height[i])</code>.</p>
+# 11. Container With Most Water
 
-<p>Find two lines that together with the x-axis form a container, such that the container contains the most water.</p>
+## Medium
 
-<p>Return <em>the maximum amount of water a container can store</em>.</p>
+***
 
-<p><strong>Notice</strong> that you may not slant the container.</p>
+You are given an integer array `height` of length `n`. There are `n` vertical lines drawn such that the two endpoints of the `ith` line are `(i, 0)` and `(i, height[i])`.
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
-<img alt="" src="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg" style="width: 600px; height: 287px;">
-<pre><strong>Input:</strong> height = [1,8,6,2,5,4,8,3,7]
-<strong>Output:</strong> 49
-<strong>Explanation:</strong> The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
-</pre>
+Find two lines that together with the x-axis form a container, such that the container contains the most water.
 
-<p><strong>Example 2:</strong></p>
+Return _the maximum amount of water a container can store_.
 
-<pre><strong>Input:</strong> height = [1,1]
-<strong>Output:</strong> 1
-</pre>
+**Notice** that you may not slant the container.
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+&#x20;
 
-<ul>
-	<li><code>n == height.length</code></li>
-	<li><code>2 &lt;= n &lt;= 10<sup>5</sup></code></li>
-	<li><code>0 &lt;= height[i] &lt;= 10<sup>4</sup></code></li>
-</ul>
-</div>
+**Example 1:**
+
+![](https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question\_11.jpg)
+
+```
+Input: height = [1,8,6,2,5,4,8,3,7]
+Output: 49
+Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+```
+
+**Example 2:**
+
+```
+Input: height = [1,1]
+Output: 1
+```
+
+&#x20;
+
+**Constraints:**
+
+* `n == height.length`
+* `2 <= n <= 105`
+* `0 <= height[i] <= 104`

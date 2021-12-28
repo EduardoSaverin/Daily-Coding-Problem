@@ -1,32 +1,87 @@
-<h2>206. Reverse Linked List</h2><h3>Easy</h3><hr><div><p>Given the <code>head</code> of a singly linked list, reverse the list, and return <em>the reversed list</em>.</p>
+# 206. Reverse Linked List
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
-<img alt="" src="https://assets.leetcode.com/uploads/2021/02/19/rev1ex1.jpg" style="width: 542px; height: 222px;">
-<pre><strong>Input:</strong> head = [1,2,3,4,5]
-<strong>Output:</strong> [5,4,3,2,1]
-</pre>
+## Easy
 
-<p><strong>Example 2:</strong></p>
-<img alt="" src="https://assets.leetcode.com/uploads/2021/02/19/rev1ex2.jpg" style="width: 182px; height: 222px;">
-<pre><strong>Input:</strong> head = [1,2]
-<strong>Output:</strong> [2,1]
-</pre>
+***
 
-<p><strong>Example 3:</strong></p>
+Given the `head` of a singly linked list, reverse the list, and return _the reversed list_.
 
-<pre><strong>Input:</strong> head = []
-<strong>Output:</strong> []
-</pre>
+&#x20;
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+**Example 1:**
 
-<ul>
-	<li>The number of nodes in the list is the range <code>[0, 5000]</code>.</li>
-	<li><code>-5000 &lt;= Node.val &lt;= 5000</code></li>
-</ul>
+![](https://assets.leetcode.com/uploads/2021/02/19/rev1ex1.jpg)
 
-<p>&nbsp;</p>
-<p><strong>Follow up:</strong> A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
-</div>
+```
+Input: head = [1,2,3,4,5]
+Output: [5,4,3,2,1]
+```
+
+**Example 2:**
+
+![](https://assets.leetcode.com/uploads/2021/02/19/rev1ex2.jpg)
+
+```
+Input: head = [1,2]
+Output: [2,1]
+```
+
+**Example 3:**
+
+```
+Input: head = []
+Output: []
+```
+
+&#x20;
+
+**Constraints:**
+
+* The number of nodes in the list is the range `[0, 5000]`.
+* `-5000 <= Node.val <= 5000`
+
+&#x20;
+
+**Follow up:** A linked list can be reversed either iteratively or recursively. Could you implement both?
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head:
+            return
+        elif head.next is None:
+            return head
+        tail = None
+        def recursion(head):
+            nonlocal tail
+            if head.next:
+                # 5 = (4.next)
+                # 4 = (3.next)
+                node = recursion(head.next)
+                if tail is None:
+                    tail = node
+                # print(head, head.next, node)
+                # 4.next = None
+                # 3.next = None
+                head.next = None
+                if node is None:
+                    return head
+                # 5.next = 4
+                # 4.next = 3
+                node.next = head
+                # print('Node', node)
+                # 4
+                # 3 = 4.next
+                node = node.next
+                # print('Nodes Next', node)
+                return node
+            else:
+                return head
+        recursion(head)
+        return tail
+```

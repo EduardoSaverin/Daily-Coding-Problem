@@ -1,37 +1,62 @@
-<h2>784. Letter Case Permutation</h2><h3>Medium</h3><hr><div><p>Given a string <code>s</code>, we can transform every letter individually to be lowercase or uppercase to create another string.</p>
+# 784. Letter Case Permutation
 
-<p>Return <em>a list of all possible strings we could create</em>. You can return the output&nbsp;in <strong>any order</strong>.</p>
+## Medium
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+***
 
-<pre><strong>Input:</strong> s = "a1b2"
-<strong>Output:</strong> ["a1b2","a1B2","A1b2","A1B2"]
-</pre>
+Given a string `s`, we can transform every letter individually to be lowercase or uppercase to create another string.
 
-<p><strong>Example 2:</strong></p>
+Return _a list of all possible strings we could create_. You can return the output in **any order**.
 
-<pre><strong>Input:</strong> s = "3z4"
-<strong>Output:</strong> ["3z4","3Z4"]
-</pre>
+&#x20;
 
-<p><strong>Example 3:</strong></p>
+**Example 1:**
 
-<pre><strong>Input:</strong> s = "12345"
-<strong>Output:</strong> ["12345"]
-</pre>
+```
+Input: s = "a1b2"
+Output: ["a1b2","a1B2","A1b2","A1B2"]
+```
 
-<p><strong>Example 4:</strong></p>
+**Example 2:**
 
-<pre><strong>Input:</strong> s = "0"
-<strong>Output:</strong> ["0"]
-</pre>
+```
+Input: s = "3z4"
+Output: ["3z4","3Z4"]
+```
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+**Example 3:**
 
-<ul>
-	<li><code>s</code> will be a string with length between <code>1</code> and <code>12</code>.</li>
-	<li><code>s</code> will consist only of letters or digits.</li>
-</ul>
-</div>
+```
+Input: s = "12345"
+Output: ["12345"]
+```
+
+**Example 4:**
+
+```
+Input: s = "0"
+Output: ["0"]
+```
+
+&#x20;
+
+**Constraints:**
+
+* `s` will be a string with length between `1` and `12`.
+* `s` will consist only of letters or digits.
+
+```python
+class Solution:
+    def letterCasePermutation(self, s: str) -> List[str]:
+        s = s.lower()
+        result = set()
+        def recursion(s, ele, start, result):
+            if start >= len(s):
+                result.add(ele)
+                return
+            for index in range(start, len(s)):
+                recursion(s, ele[:index] + ele[index].upper() + ele[index+1:], index+1, result)
+                recursion(s, ele, index+1, result)
+        recursion(s,s,0, result)
+        return list(result)
+```

@@ -1,38 +1,70 @@
-<h2>40. Combination Sum II</h2><h3>Medium</h3><hr><div><p>Given a collection of candidate numbers (<code>candidates</code>) and a target number (<code>target</code>), find all unique combinations in <code>candidates</code>&nbsp;where the candidate numbers sum to <code>target</code>.</p>
+# 40. Combination Sum II
 
-<p>Each number in <code>candidates</code>&nbsp;may only be used <strong>once</strong> in the combination.</p>
+## Medium
 
-<p><strong>Note:</strong>&nbsp;The solution set must not contain duplicate combinations.</p>
+***
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+Given a collection of candidate numbers (`candidates`) and a target number (`target`), find all unique combinations in `candidates` where the candidate numbers sum to `target`.
 
-<pre><strong>Input:</strong> candidates = [10,1,2,7,6,1,5], target = 8
-<strong>Output:</strong> 
+Each number in `candidates` may only be used **once** in the combination.
+
+**Note:** The solution set must not contain duplicate combinations.
+
+&#x20;
+
+**Example 1:**
+
+```
+Input: candidates = [10,1,2,7,6,1,5], target = 8
+Output: 
 [
 [1,1,6],
 [1,2,5],
 [1,7],
 [2,6]
 ]
-</pre>
+```
 
-<p><strong>Example 2:</strong></p>
+**Example 2:**
 
-<pre><strong>Input:</strong> candidates = [2,5,2,1,2], target = 5
-<strong>Output:</strong> 
+```
+Input: candidates = [2,5,2,1,2], target = 5
+Output: 
 [
 [1,2,2],
 [5]
 ]
-</pre>
+```
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+&#x20;
 
-<ul>
-	<li><code>1 &lt;=&nbsp;candidates.length &lt;= 100</code></li>
-	<li><code>1 &lt;=&nbsp;candidates[i] &lt;= 50</code></li>
-	<li><code>1 &lt;= target &lt;= 30</code></li>
-</ul>
-</div>
+**Constraints:**
+
+* `1 <= candidates.length <= 100`
+* `1 <= candidates[i] <= 50`
+* `1 <= target <= 30`
+
+Solution
+
+```python
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        candidates.sort()
+        result = []
+        print(candidates)
+        def recursion(candidates, start, path, total, target):
+            nonlocal result
+            if target == total:
+                result.append(path[:])
+                return
+            for index in range(start, len(candidates)):
+                if index > start and candidates[index] == candidates[index-1]:
+                    continue
+                if total+candidates[index] > target:
+                    break
+                path.append(candidates[index])
+                recursion(candidates,index+1, path, total+candidates[index], target)
+                path.pop()
+        recursion(candidates,0,[],0, target)
+        return result
+```

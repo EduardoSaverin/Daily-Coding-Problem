@@ -1,24 +1,37 @@
-<h2>563. Binary Tree Tilt</h2><h3>Easy</h3><hr><div><p>Given the <code>root</code> of a binary tree, return <em>the sum of every tree node's <strong>tilt</strong>.</em></p>
+# 563. Binary Tree Tilt
 
-<p>The <strong>tilt</strong> of a tree node is the <b>absolute difference</b> between the sum of all left subtree node <strong>values</strong> and all right subtree node <strong>values</strong>. If a node does not have a left child, then the sum of the left subtree node <strong>values</strong> is treated as <code>0</code>. The rule is similar if there the node does not have a right child.</p>
+## Easy
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
-<img alt="" src="https://assets.leetcode.com/uploads/2020/10/20/tilt1.jpg" style="width: 712px; height: 182px;">
-<pre><strong>Input:</strong> root = [1,2,3]
-<strong>Output:</strong> 1
-<strong>Explanation:</strong> 
+***
+
+Given the `root` of a binary tree, return _the sum of every tree node's **tilt**._
+
+The **tilt** of a tree node is the **absolute difference** between the sum of all left subtree node **values** and all right subtree node **values**. If a node does not have a left child, then the sum of the left subtree node **values** is treated as `0`. The rule is similar if there the node does not have a right child.
+
+&#x20;
+
+**Example 1:**
+
+![](https://assets.leetcode.com/uploads/2020/10/20/tilt1.jpg)
+
+```
+Input: root = [1,2,3]
+Output: 1
+Explanation: 
 Tilt of node 2 : |0-0| = 0 (no children)
 Tilt of node 3 : |0-0| = 0 (no children)
 Tilt of node 1 : |2-3| = 1 (left subtree is just left child, so sum is 2; right subtree is just right child, so sum is 3)
 Sum of every tilt : 0 + 0 + 1 = 1
-</pre>
+```
 
-<p><strong>Example 2:</strong></p>
-<img alt="" src="https://assets.leetcode.com/uploads/2020/10/20/tilt2.jpg" style="width: 800px; height: 203px;">
-<pre><strong>Input:</strong> root = [4,2,9,3,5,null,7]
-<strong>Output:</strong> 15
-<strong>Explanation:</strong> 
+**Example 2:**
+
+![](https://assets.leetcode.com/uploads/2020/10/20/tilt2.jpg)
+
+```
+Input: root = [4,2,9,3,5,null,7]
+Output: 15
+Explanation: 
 Tilt of node 3 : |0-0| = 0 (no children)
 Tilt of node 5 : |0-0| = 0 (no children)
 Tilt of node 7 : |0-0| = 0 (no children)
@@ -26,19 +39,46 @@ Tilt of node 2 : |3-5| = 2 (left subtree is just left child, so sum is 3; right 
 Tilt of node 9 : |0-7| = 7 (no left child, so sum is 0; right subtree is just right child, so sum is 7)
 Tilt of node 4 : |(3+5+2)-(9+7)| = |10-16| = 6 (left subtree values are 3, 5, and 2, which sums to 10; right subtree values are 9 and 7, which sums to 16)
 Sum of every tilt : 0 + 0 + 0 + 2 + 7 + 6 = 15
-</pre>
+```
 
-<p><strong>Example 3:</strong></p>
-<img alt="" src="https://assets.leetcode.com/uploads/2020/10/20/tilt3.jpg" style="width: 800px; height: 293px;">
-<pre><strong>Input:</strong> root = [21,7,14,1,1,2,2,3,3]
-<strong>Output:</strong> 9
-</pre>
+**Example 3:**
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+![](https://assets.leetcode.com/uploads/2020/10/20/tilt3.jpg)
 
-<ul>
-	<li>The number of nodes in the tree is in the range <code>[0, 10<sup>4</sup>]</code>.</li>
-	<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
-</ul>
-</div>
+```
+Input: root = [21,7,14,1,1,2,2,3,3]
+Output: 9
+```
+
+&#x20;
+
+**Constraints:**
+
+* The number of nodes in the tree is in the range `[0, 104]`.
+* `-1000 <= Node.val <= 1000`
+
+Solution
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    result = 0
+    def findTilt(self, root: Optional[TreeNode]) -> int:
+        result = 0
+        def recursion(root):
+            nonlocal result
+            if root is None:
+                return 0
+            left = recursion(root.left)
+            right = recursion(root.right)
+            root.sum = abs(left-right)
+            result += root.sum
+            return root.val + left + right
+        recursion(root)
+        return result
+```

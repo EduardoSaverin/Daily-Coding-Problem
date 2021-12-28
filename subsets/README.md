@@ -1,26 +1,80 @@
-<h2>78. Subsets</h2><h3>Medium</h3><hr><div><p>Given an integer array <code>nums</code> of <strong>unique</strong> elements, return <em>all possible subsets (the power set)</em>.</p>
+# 78. Subsets
 
-<p>The solution set <strong>must not</strong> contain duplicate subsets. Return the solution in <strong>any order</strong>.</p>
+## Medium
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+***
 
-<pre><strong>Input:</strong> nums = [1,2,3]
-<strong>Output:</strong> [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
-</pre>
+Given an integer array `nums` of **unique** elements, return _all possible subsets (the power set)_.
 
-<p><strong>Example 2:</strong></p>
+The solution set **must not** contain duplicate subsets. Return the solution in **any order**.
 
-<pre><strong>Input:</strong> nums = [0]
-<strong>Output:</strong> [[],[0]]
-</pre>
+&#x20;
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+**Example 1:**
 
-<ul>
-	<li><code>1 &lt;= nums.length &lt;= 10</code></li>
-	<li><code>-10 &lt;= nums[i] &lt;= 10</code></li>
-	<li>All the numbers of&nbsp;<code>nums</code> are <strong>unique</strong>.</li>
-</ul>
-</div>
+```
+Input: nums = [1,2,3]
+Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+```
+
+**Example 2:**
+
+```
+Input: nums = [0]
+Output: [[],[0]]
+```
+
+&#x20;
+
+**Constraints:**
+
+* `1 <= nums.length <= 10`
+* `-10 <= nums[i] <= 10`
+* All the numbers of `nums` are **unique**.
+
+```python
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        l = []
+        def recursion(nums, index, result):
+            nonlocal l
+            if index >= len(nums):
+                # print(result)
+                l.append(result)
+            for i in range(index, len(nums)):
+                result.append(nums[i])
+                recursion(nums, i+1, result[:])
+                result.pop()
+                recursion(nums, i+1, result[:])
+        recursion(nums, 0, [])
+        return set(tuple(row) for row in l)
+    
+    
+# Faster Solution
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        result = []
+        self.dfs(nums ,[], result)
+        return result
+    
+    def dfs(self, nums, path, result):
+        result.append(path[:])
+        for index in range(len(nums)):
+            self.dfs(nums[index+1:], path + [nums[index]], result)
+
+# Solution 3 : Related to Subsets 2 PB 90         
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        def recursion(nums, start, path, result):
+            result.append(path[:])
+            for index in range(start, len(nums)):
+                # if index != start and nums[index] == nums[index-1]:
+                #     continue
+                path.append(nums[index])
+                recursion(nums, index+1, path, result)
+                path.pop()
+        result = []
+        recursion(nums, 0, [], result)
+        return result
+```

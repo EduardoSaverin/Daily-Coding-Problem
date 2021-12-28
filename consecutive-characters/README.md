@@ -1,45 +1,74 @@
-<h2>1446. Consecutive Characters</h2><h3>Easy</h3><hr><div><p>The <strong>power</strong> of the string is the maximum length of a non-empty substring that contains only one unique character.</p>
+# 1446. Consecutive Characters
 
-<p>Given a string <code>s</code>, return <em>the <strong>power</strong> of</em> <code>s</code>.</p>
+## Easy
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+***
 
-<pre><strong>Input:</strong> s = "leetcode"
-<strong>Output:</strong> 2
-<strong>Explanation:</strong> The substring "ee" is of length 2 with the character 'e' only.
-</pre>
+The **power** of the string is the maximum length of a non-empty substring that contains only one unique character.
 
-<p><strong>Example 2:</strong></p>
+Given a string `s`, return _the **power** of_ `s`.
 
-<pre><strong>Input:</strong> s = "abbcccddddeeeeedcba"
-<strong>Output:</strong> 5
-<strong>Explanation:</strong> The substring "eeeee" is of length 5 with the character 'e' only.
-</pre>
+&#x20;
 
-<p><strong>Example 3:</strong></p>
+**Example 1:**
 
-<pre><strong>Input:</strong> s = "triplepillooooow"
-<strong>Output:</strong> 5
-</pre>
+```
+Input: s = "leetcode"
+Output: 2
+Explanation: The substring "ee" is of length 2 with the character 'e' only.
+```
 
-<p><strong>Example 4:</strong></p>
+**Example 2:**
 
-<pre><strong>Input:</strong> s = "hooraaaaaaaaaaay"
-<strong>Output:</strong> 11
-</pre>
+```
+Input: s = "abbcccddddeeeeedcba"
+Output: 5
+Explanation: The substring "eeeee" is of length 5 with the character 'e' only.
+```
 
-<p><strong>Example 5:</strong></p>
+**Example 3:**
 
-<pre><strong>Input:</strong> s = "tourist"
-<strong>Output:</strong> 1
-</pre>
+```
+Input: s = "triplepillooooow"
+Output: 5
+```
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+**Example 4:**
 
-<ul>
-	<li><code>1 &lt;= s.length &lt;= 500</code></li>
-	<li><code>s</code> consists of only lowercase English letters.</li>
-</ul>
-</div>
+```
+Input: s = "hooraaaaaaaaaaay"
+Output: 11
+```
+
+**Example 5:**
+
+```
+Input: s = "tourist"
+Output: 1
+```
+
+&#x20;
+
+**Constraints:**
+
+* `1 <= s.length <= 500`
+* `s` consists of only lowercase English letters.
+
+```python
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        result = []
+        def recursion(n, k, start=1, temp=[]):
+            nonlocal result
+            if k <= 0:
+                result.append(list(temp))
+                return temp
+            for index in range(start, n+1):
+                temp.append(index)
+                # if (k-1) == 0:
+                #     result.append(list(temp))
+                t = recursion(n, k-1,index+1, temp)
+                temp.pop()
+        recursion(n,k,1,[])
+        return resultcode
+```

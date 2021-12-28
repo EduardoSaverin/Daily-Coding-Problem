@@ -1,17 +1,44 @@
-<h2>22. Generate Parentheses</h2><h3>Medium</h3><hr><div><p>Given <code>n</code> pairs of parentheses, write a function to <em>generate all combinations of well-formed parentheses</em>.</p>
+# 22. Generate Parentheses
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
-<pre><strong>Input:</strong> n = 3
-<strong>Output:</strong> ["((()))","(()())","(())()","()(())","()()()"]
-</pre><p><strong>Example 2:</strong></p>
-<pre><strong>Input:</strong> n = 1
-<strong>Output:</strong> ["()"]
-</pre>
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+## Medium
 
-<ul>
-	<li><code>1 &lt;= n &lt;= 8</code></li>
-</ul>
-</div>
+***
+
+Given `n` pairs of parentheses, write a function to _generate all combinations of well-formed parentheses_.
+
+&#x20;
+
+**Example 1:**
+
+```
+Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+```
+
+**Example 2:**
+
+```
+Input: n = 1
+Output: ["()"]
+```
+
+&#x20;
+
+**Constraints:**
+
+* `1 <= n <= 8`
+
+```python
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        result = []
+        def recursion(start, end, path):
+            if start == 0 and end == 0:
+                result.append(path[:])
+            if start > 0:
+                recursion(start-1, end, path + '(')
+            if end > 0 and end > start:
+                recursion(start, end-1, path + ')')
+        recursion(n,n,'')
+        return result
+```

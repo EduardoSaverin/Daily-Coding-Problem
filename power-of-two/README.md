@@ -1,46 +1,66 @@
-<h2>231. Power of Two</h2><h3>Easy</h3><hr><div><p>Given an integer <code>n</code>, return <em><code>true</code> if it is a power of two. Otherwise, return <code>false</code></em>.</p>
+# 231. Power of Two
 
-<p>An integer <code>n</code> is a power of two, if there exists an integer <code>x</code> such that <code>n == 2<sup>x</sup></code>.</p>
+## Easy
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+***
 
-<pre><strong>Input:</strong> n = 1
-<strong>Output:</strong> true
-<strong>Explanation: </strong>2<sup>0</sup> = 1
-</pre>
+Given an integer `n`, return _`true` if it is a power of two. Otherwise, return `false`_.
 
-<p><strong>Example 2:</strong></p>
+An integer `n` is a power of two, if there exists an integer `x` such that `n == 2x`.
 
-<pre><strong>Input:</strong> n = 16
-<strong>Output:</strong> true
-<strong>Explanation: </strong>2<sup>4</sup> = 16
-</pre>
+&#x20;
 
-<p><strong>Example 3:</strong></p>
+**Example 1:**
 
-<pre><strong>Input:</strong> n = 3
-<strong>Output:</strong> false
-</pre>
+```
+Input: n = 1
+Output: true
+Explanation: 20 = 1
+```
 
-<p><strong>Example 4:</strong></p>
+**Example 2:**
 
-<pre><strong>Input:</strong> n = 4
-<strong>Output:</strong> true
-</pre>
+```
+Input: n = 16
+Output: true
+Explanation: 24 = 16
+```
 
-<p><strong>Example 5:</strong></p>
+**Example 3:**
 
-<pre><strong>Input:</strong> n = 5
-<strong>Output:</strong> false
-</pre>
+```
+Input: n = 3
+Output: false
+```
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+**Example 4:**
 
-<ul>
-	<li><code>-2<sup>31</sup> &lt;= n &lt;= 2<sup>31</sup> - 1</code></li>
-</ul>
+```
+Input: n = 4
+Output: true
+```
 
-<p>&nbsp;</p>
-<strong>Follow up:</strong> Could you solve it without loops/recursion?</div>
+**Example 5:**
+
+```
+Input: n = 5
+Output: false
+```
+
+&#x20;
+
+**Constraints:**
+
+* `-231 <= n <= 231 - 1`
+
+&#x20;
+
+**Follow up:** Could you solve it without loops/recursion?
+
+```python
+class Solution:
+    def isPowerOfTwo(self, n: int) -> bool:
+        if n <= 0:
+            return False
+        return (math.log10(n) / math.log10(2)).is_integer()
+```

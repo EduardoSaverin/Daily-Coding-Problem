@@ -1,33 +1,41 @@
-<h2>17. Letter Combinations of a Phone Number</h2><h3>Medium</h3><hr><div><p>Given a string containing digits from <code>2-9</code> inclusive, return all possible letter combinations that the number could represent. Return the answer in <strong>any order</strong>.</p>
+# 17. Letter Combinations of a Phone Number
 
-<p>A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.</p>
+## Medium
 
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png" style="width: 200px; height: 162px;"></p>
+***
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+Given a string containing digits from `2-9` inclusive, return all possible letter combinations that the number could represent. Return the answer in **any order**.
 
-<pre><strong>Input:</strong> digits = "23"
-<strong>Output:</strong> ["ad","ae","af","bd","be","bf","cd","ce","cf"]
-</pre>
+A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
 
-<p><strong>Example 2:</strong></p>
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png)
 
-<pre><strong>Input:</strong> digits = ""
-<strong>Output:</strong> []
-</pre>
+&#x20;
 
-<p><strong>Example 3:</strong></p>
+**Example 1:**
 
-<pre><strong>Input:</strong> digits = "2"
-<strong>Output:</strong> ["a","b","c"]
-</pre>
+```
+Input: digits = "23"
+Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+```
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+**Example 2:**
 
-<ul>
-	<li><code>0 &lt;= digits.length &lt;= 4</code></li>
-	<li><code>digits[i]</code> is a digit in the range <code>['2', '9']</code>.</li>
-</ul>
-</div>
+```
+Input: digits = ""
+Output: []
+```
+
+**Example 3:**
+
+```
+Input: digits = "2"
+Output: ["a","b","c"]
+```
+
+&#x20;
+
+**Constraints:**
+
+* `0 <= digits.length <= 4`
+* `digits[i]` is a digit in the range `['2', '9']`.

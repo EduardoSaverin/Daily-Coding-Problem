@@ -1,25 +1,53 @@
-<h2>416. Partition Equal Subset Sum</h2><h3>Medium</h3><hr><div><p>Given a <strong>non-empty</strong> array <code>nums</code> containing <strong>only positive integers</strong>, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.</p>
+# 416. Partition Equal Subset Sum
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+## Medium
 
-<pre><strong>Input:</strong> nums = [1,5,11,5]
-<strong>Output:</strong> true
-<strong>Explanation:</strong> The array can be partitioned as [1, 5, 5] and [11].
-</pre>
+***
 
-<p><strong>Example 2:</strong></p>
+Given a **non-empty** array `nums` containing **only positive integers**, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
 
-<pre><strong>Input:</strong> nums = [1,2,3,5]
-<strong>Output:</strong> false
-<strong>Explanation:</strong> The array cannot be partitioned into equal sum subsets.
-</pre>
+&#x20;
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+**Example 1:**
 
-<ul>
-	<li><code>1 &lt;= nums.length &lt;= 200</code></li>
-	<li><code>1 &lt;= nums[i] &lt;= 100</code></li>
-</ul>
-</div>
+```
+Input: nums = [1,5,11,5]
+Output: true
+Explanation: The array can be partitioned as [1, 5, 5] and [11].
+```
+
+**Example 2:**
+
+```
+Input: nums = [1,2,3,5]
+Output: false
+Explanation: The array cannot be partitioned into equal sum subsets.
+```
+
+&#x20;
+
+**Constraints:**
+
+* `1 <= nums.length <= 200`
+* `1 <= nums[i] <= 100`
+
+```python
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total = sum(nums)
+        target = total // 2
+        if total%2 == 1 or len(nums) == 1:
+            return False
+        d = {}
+        def recursion(target, index, d):
+            if target < 0 or index == len(nums):
+                return False
+            elif target == 0:
+                return True
+            elif (index, target) in d:
+                return d[(index, target)]
+            value = recursion(target - nums[index], index+1, d) or recursion(target, index+1, d)
+            d[(index, target)] = value
+            return value
+        return recursion(target, 0, d)
+```

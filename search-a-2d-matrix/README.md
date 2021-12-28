@@ -1,30 +1,59 @@
-<h2>74. Search a 2D Matrix</h2><h3>Medium</h3><hr><div><p>Write an efficient algorithm that searches for a value in an <code>m x n</code> matrix. This matrix has the following properties:</p>
+# 74. Search a 2D Matrix
 
-<ul>
-	<li>Integers in each row are sorted from left to right.</li>
-	<li>The first integer of each row is greater than the last integer of the previous row.</li>
-</ul>
+## Medium
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
-<img alt="" src="https://assets.leetcode.com/uploads/2020/10/05/mat.jpg" style="width: 322px; height: 242px;">
-<pre><strong>Input:</strong> matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3
-<strong>Output:</strong> true
-</pre>
+***
 
-<p><strong>Example 2:</strong></p>
-<img alt="" src="https://assets.leetcode.com/uploads/2020/10/05/mat2.jpg" style="width: 322px; height: 242px;">
-<pre><strong>Input:</strong> matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13
-<strong>Output:</strong> false
-</pre>
+Write an efficient algorithm that searches for a value in an `m x n` matrix. This matrix has the following properties:
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+* Integers in each row are sorted from left to right.
+* The first integer of each row is greater than the last integer of the previous row.
 
-<ul>
-	<li><code>m == matrix.length</code></li>
-	<li><code>n == matrix[i].length</code></li>
-	<li><code>1 &lt;= m, n &lt;= 100</code></li>
-	<li><code>-10<sup>4</sup> &lt;= matrix[i][j], target &lt;= 10<sup>4</sup></code></li>
-</ul>
-</div>
+&#x20;
+
+**Example 1:**
+
+![](https://assets.leetcode.com/uploads/2020/10/05/mat.jpg)
+
+```
+Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3
+Output: true
+```
+
+**Example 2:**
+
+![](https://assets.leetcode.com/uploads/2020/10/05/mat2.jpg)
+
+```
+Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13
+Output: false
+```
+
+&#x20;
+
+**Constraints:**
+
+* `m == matrix.length`
+* `n == matrix[i].length`
+* `1 <= m, n <= 100`
+* `-104 <= matrix[i][j], target <= 104`
+
+```python
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        row = len(matrix)
+        col = len(matrix[0])
+        minRow = 0
+        maxRow = 0
+        for r in range(row):
+            if target <= matrix[r][col-1]:
+                maxRow = r
+            elif matrix[r][0] >= target:
+                minRow = r
+        for r in range(minRow, maxRow+1):
+            for c in range(col):
+                if matrix[r][c] == target:
+                    return True
+        return False
+        
+```

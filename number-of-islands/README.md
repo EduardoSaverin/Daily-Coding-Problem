@@ -1,37 +1,86 @@
-<h2>200. Number of Islands</h2><h3>Medium</h3><hr><div><p>Given an <code>m x n</code> 2D binary grid <code>grid</code> which represents a map of <code>'1'</code>s (land) and <code>'0'</code>s (water), return <em>the number of islands</em>.</p>
+# 200. Number of Islands
 
-<p>An <strong>island</strong> is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.</p>
+## Medium
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+***
 
-<pre><strong>Input:</strong> grid = [
+Given an `m x n` 2D binary grid `grid` which represents a map of `'1'`s (land) and `'0'`s (water), return _the number of islands_.
+
+An **island** is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+&#x20;
+
+**Example 1:**
+
+```
+Input: grid = [
   ["1","1","1","1","0"],
   ["1","1","0","1","0"],
   ["1","1","0","0","0"],
   ["0","0","0","0","0"]
 ]
-<strong>Output:</strong> 1
-</pre>
+Output: 1
+```
 
-<p><strong>Example 2:</strong></p>
+**Example 2:**
 
-<pre><strong>Input:</strong> grid = [
+```
+Input: grid = [
   ["1","1","0","0","0"],
   ["1","1","0","0","0"],
   ["0","0","1","0","0"],
   ["0","0","0","1","1"]
 ]
-<strong>Output:</strong> 3
-</pre>
+Output: 3
+```
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+&#x20;
 
-<ul>
-	<li><code>m == grid.length</code></li>
-	<li><code>n == grid[i].length</code></li>
-	<li><code>1 &lt;= m, n &lt;= 300</code></li>
-	<li><code>grid[i][j]</code> is <code>'0'</code> or <code>'1'</code>.</li>
-</ul>
-</div>
+**Constraints:**
+
+* `m == grid.length`
+* `n == grid[i].length`
+* `1 <= m, n <= 300`
+* `grid[i][j]` is `'0'` or `'1'`.
+
+```python
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        s = set()
+        for row in range(len(grid)):
+            for col in range(len(grid[0])):
+                if grid[row][col] == '1':
+                    s.add(self.getKey(row,col))
+        count = 0
+        while s:
+            count += 1
+            s = self.removeAllAdjacent(grid,s)
+        return count
+            
+    def removeAllAdjacent(self, grid, s):
+        q = []
+        q.append(s.pop())
+        while q:
+            newKey = q.pop(0)
+            if newKey in s:
+                s.remove(newKey)
+            row, col = newKey.split("-")
+            row = int(row)
+            col = int(col)
+            if (row-1) >= 0 and grid[row-1][col] == '1' and self.getKey(row-1,col) in s:
+                s.remove(self.getKey(row-1,col))
+                q.append(self.getKey(row-1, col))
+            if (col-1) >= 0 and grid[row][col-1] == '1' and self.getKey(row,col-1) in s:
+                s.remove(self.getKey(row,col-1))
+                q.append(self.getKey(row,col-1))
+            if (row+1) < len(grid) and grid[row+1][col] == '1' and self.getKey(row+1,col) in s:
+                s.remove(self.getKey(row+1,col))
+                q.append(self.getKey(row+1, col))
+            if (col+1) < len(grid[0]) and grid[row][col+1] == '1' and self.getKey(row,col+1) in s:
+                s.remove(self.getKey(row,col+1))
+                q.append(self.getKey(row, col+1))
+        return s
+                
+    def getKey(self,row,col):
+        return str(row)+"-"+str(col)
+```

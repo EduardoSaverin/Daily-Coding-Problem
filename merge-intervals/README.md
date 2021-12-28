@@ -1,27 +1,58 @@
-[Discussion Post (created on 24/11/2021 at 11:52)](https://leetcode.com/problems/merge-intervals/discuss/1644272/Python-Simplest-Iterative-Solution)  
-<h2>56. Merge Intervals</h2><h3>Medium</h3><hr><div><p>Given an array&nbsp;of <code>intervals</code>&nbsp;where <code>intervals[i] = [start<sub>i</sub>, end<sub>i</sub>]</code>, merge all overlapping intervals, and return <em>an array of the non-overlapping intervals that cover all the intervals in the input</em>.</p>
+# 56. Merge Intervals
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+[Discussion Post (created on 24/11/2021 at 11:52)](https://leetcode.com/problems/merge-intervals/discuss/1644272/Python-Simplest-Iterative-Solution)
 
-<pre><strong>Input:</strong> intervals = [[1,3],[2,6],[8,10],[15,18]]
-<strong>Output:</strong> [[1,6],[8,10],[15,18]]
-<strong>Explanation:</strong> Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
-</pre>
+### 56. Merge Intervals
 
-<p><strong>Example 2:</strong></p>
+#### Medium
 
-<pre><strong>Input:</strong> intervals = [[1,4],[4,5]]
-<strong>Output:</strong> [[1,5]]
-<strong>Explanation:</strong> Intervals [1,4] and [4,5] are considered overlapping.
-</pre>
+***
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+Given an array of `intervals` where `intervals[i] = [starti, endi]`, merge all overlapping intervals, and return _an array of the non-overlapping intervals that cover all the intervals in the input_.
 
-<ul>
-	<li><code>1 &lt;= intervals.length &lt;= 10<sup>4</sup></code></li>
-	<li><code>intervals[i].length == 2</code></li>
-	<li><code>0 &lt;= start<sub>i</sub> &lt;= end<sub>i</sub> &lt;= 10<sup>4</sup></code></li>
-</ul>
-</div>
+&#x20;
+
+**Example 1:**
+
+```
+Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+Output: [[1,6],[8,10],[15,18]]
+Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
+```
+
+**Example 2:**
+
+```
+Input: intervals = [[1,4],[4,5]]
+Output: [[1,5]]
+Explanation: Intervals [1,4] and [4,5] are considered overlapping.
+```
+
+&#x20;
+
+**Constraints:**
+
+* `1 <= intervals.length <= 104`
+* `intervals[i].length == 2`
+* `0 <= starti <= endi <= 104`
+
+```python
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        intervals.sort(key=lambda x : x[0])
+        result = []
+        for interval in intervals:
+            if not result:
+                result.append(interval)
+                continue
+            lastInterval = result[-1]
+            thisTime = interval[0]
+            lastTime = lastInterval[1]
+            if thisTime <= lastTime:
+                newInterval = [min(lastInterval[0], interval[0]), max(lastInterval[1], interval[1])]
+                result.pop()
+                result.append(newInterval)
+            else:
+                result.append(interval)
+        return result
+```

@@ -1,43 +1,78 @@
-<h2>994. Rotting Oranges</h2><h3>Medium</h3><hr><div><p>You are given an <code>m x n</code> <code>grid</code> where each cell can have one of three values:</p>
+# 994. Rotting Oranges
 
-<ul>
-	<li><code>0</code> representing an empty cell,</li>
-	<li><code>1</code> representing a fresh orange, or</li>
-	<li><code>2</code> representing a rotten orange.</li>
-</ul>
+## Medium
 
-<p>Every minute, any fresh orange that is <strong>4-directionally adjacent</strong> to a rotten orange becomes rotten.</p>
+***
 
-<p>Return <em>the minimum number of minutes that must elapse until no cell has a fresh orange</em>. If <em>this is impossible, return</em> <code>-1</code>.</p>
+You are given an `m x n` `grid` where each cell can have one of three values:
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
-<img alt="" src="https://assets.leetcode.com/uploads/2019/02/16/oranges.png" style="width: 650px; height: 137px;">
-<pre><strong>Input:</strong> grid = [[2,1,1],[1,1,0],[0,1,1]]
-<strong>Output:</strong> 4
-</pre>
+* `0` representing an empty cell,
+* `1` representing a fresh orange, or
+* `2` representing a rotten orange.
 
-<p><strong>Example 2:</strong></p>
+Every minute, any fresh orange that is **4-directionally adjacent** to a rotten orange becomes rotten.
 
-<pre><strong>Input:</strong> grid = [[2,1,1],[0,1,1],[1,0,1]]
-<strong>Output:</strong> -1
-<strong>Explanation:</strong> The orange in the bottom left corner (row 2, column 0) is never rotten, because rotting only happens 4-directionally.
-</pre>
+Return _the minimum number of minutes that must elapse until no cell has a fresh orange_. If _this is impossible, return_ `-1`.
 
-<p><strong>Example 3:</strong></p>
+&#x20;
 
-<pre><strong>Input:</strong> grid = [[0,2]]
-<strong>Output:</strong> 0
-<strong>Explanation:</strong> Since there are already no fresh oranges at minute 0, the answer is just 0.
-</pre>
+**Example 1:**
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+![](https://assets.leetcode.com/uploads/2019/02/16/oranges.png)
 
-<ul>
-	<li><code>m == grid.length</code></li>
-	<li><code>n == grid[i].length</code></li>
-	<li><code>1 &lt;= m, n &lt;= 10</code></li>
-	<li><code>grid[i][j]</code> is <code>0</code>, <code>1</code>, or <code>2</code>.</li>
-</ul>
-</div>
+```
+Input: grid = [[2,1,1],[1,1,0],[0,1,1]]
+Output: 4
+```
+
+**Example 2:**
+
+```
+Input: grid = [[2,1,1],[0,1,1],[1,0,1]]
+Output: -1
+Explanation: The orange in the bottom left corner (row 2, column 0) is never rotten, because rotting only happens 4-directionally.
+```
+
+**Example 3:**
+
+```
+Input: grid = [[0,2]]
+Output: 0
+Explanation: Since there are already no fresh oranges at minute 0, the answer is just 0.
+```
+
+&#x20;
+
+**Constraints:**
+
+* `m == grid.length`
+* `n == grid[i].length`
+* `1 <= m, n <= 10`
+* `grid[i][j]` is `0`, `1`, or `2`.
+
+```python
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        row = len(grid)
+        col = len(grid[0])
+        dq = deque()
+        time = 0
+        fresh = set() # To Check if fresh is still there and fresh not updated twice
+        for i in range(row):
+            for j in range(col):
+                if grid[i][j] == 1:
+                    fresh.add((i,j))
+                elif grid[i][j] == 2:
+                    dq.append((i,j,0)) # Third thing is time Rotting orange has 0 time
+        while dq:
+            i,j,thistime = dq.popleft()
+            time = max(time,thistime)
+            for x,y in ((i-1,j), (i,j-1), (i+1,j), (i,j+1)):
+                # not checking any boundary because we have already fresh indexes that we will check below
+                if (x,y) in fresh:
+                    dq.append((x,y,thistime+1))
+                    fresh.remove((x,y))
+        return -1 if fresh else time
+        
+                    
+```

@@ -1,30 +1,57 @@
-<h2>738. Monotone Increasing Digits</h2><h3>Medium</h3><hr><div><p>An integer has <strong>monotone increasing digits</strong> if and only if each pair of adjacent digits <code>x</code> and <code>y</code> satisfy <code>x &lt;= y</code>.</p>
+# 738. Monotone Increasing Digits
 
-<p>Given an integer <code>n</code>, return <em>the largest number that is less than or equal to </em><code>n</code><em> with <strong>monotone increasing digits</strong></em>.</p>
+## Medium
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+***
 
-<pre><strong>Input:</strong> n = 10
-<strong>Output:</strong> 9
-</pre>
+An integer has **monotone increasing digits** if and only if each pair of adjacent digits `x` and `y` satisfy `x <= y`.
 
-<p><strong>Example 2:</strong></p>
+Given an integer `n`, return _the largest number that is less than or equal to_ `n` _with **monotone increasing digits**_.
 
-<pre><strong>Input:</strong> n = 1234
-<strong>Output:</strong> 1234
-</pre>
+&#x20;
 
-<p><strong>Example 3:</strong></p>
+**Example 1:**
 
-<pre><strong>Input:</strong> n = 332
-<strong>Output:</strong> 299
-</pre>
+```
+Input: n = 10
+Output: 9
+```
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+**Example 2:**
 
-<ul>
-	<li><code>0 &lt;= n &lt;= 10<sup>9</sup></code></li>
-</ul>
-</div>
+```
+Input: n = 1234
+Output: 1234
+```
+
+**Example 3:**
+
+```
+Input: n = 332
+Output: 299
+```
+
+&#x20;
+
+**Constraints:**
+
+* `0 <= n <= 109`
+
+```python
+class Solution:
+    def monotoneIncreasingDigits(self, n: int) -> int:
+        string = list(str(n))
+        length = len(string)
+        startpoint = length
+        for index in range(length-1, 0, -1):
+            # print('Index', index)
+            if string[index-1] > string[index]:
+                startpoint = index-1
+                num = int(string[index-1])
+                # print(num)
+                string[index-1] = str(num-1)
+        for index in range(startpoint+1, length):
+            string[index] = '9'
+        # print(string)
+        return int(''.join(string))
+```

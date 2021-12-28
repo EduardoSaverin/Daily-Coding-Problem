@@ -1,24 +1,49 @@
-<h2>136. Single Number</h2><h3>Easy</h3><hr><div><p>Given a <strong>non-empty</strong>&nbsp;array of integers <code>nums</code>, every element appears <em>twice</em> except for one. Find that single one.</p>
+# 136. Single Number
 
-<p>You must&nbsp;implement a solution with a linear runtime complexity and use&nbsp;only constant&nbsp;extra space.</p>
+## Easy
 
-<p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
-<pre><strong>Input:</strong> nums = [2,2,1]
-<strong>Output:</strong> 1
-</pre><p><strong>Example 2:</strong></p>
-<pre><strong>Input:</strong> nums = [4,1,2,1,2]
-<strong>Output:</strong> 4
-</pre><p><strong>Example 3:</strong></p>
-<pre><strong>Input:</strong> nums = [1]
-<strong>Output:</strong> 1
-</pre>
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+***
 
-<ul>
-	<li><code>1 &lt;= nums.length &lt;= 3 * 10<sup>4</sup></code></li>
-	<li><code>-3 * 10<sup>4</sup> &lt;= nums[i] &lt;= 3 * 10<sup>4</sup></code></li>
-	<li>Each element in the array appears twice except for one element which appears only once.</li>
-</ul>
-</div>
+Given a **non-empty** array of integers `nums`, every element appears _twice_ except for one. Find that single one.
+
+You must implement a solution with a linear runtime complexity and use only constant extra space.
+
+&#x20;
+
+**Example 1:**
+
+```
+Input: nums = [2,2,1]
+Output: 1
+```
+
+**Example 2:**
+
+```
+Input: nums = [4,1,2,1,2]
+Output: 4
+```
+
+**Example 3:**
+
+```
+Input: nums = [1]
+Output: 1
+```
+
+&#x20;
+
+**Constraints:**
+
+* `1 <= nums.length <= 3 * 104`
+* `-3 * 104 <= nums[i] <= 3 * 104`
+* Each element in the array appears twice except for one element which appears only once.
+
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        result = 0
+        for num in nums:
+            result = result^num
+        return result
+```
