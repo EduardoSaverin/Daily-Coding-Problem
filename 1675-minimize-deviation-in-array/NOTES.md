@@ -1,0 +1,1 @@
+I'm thinking of creating two heaps one min and another one as max heap. pick min from min-heap and max from max-heap and multiply and divide based on condition provided.
