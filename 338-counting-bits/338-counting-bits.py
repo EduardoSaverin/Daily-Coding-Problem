@@ -1,15 +1,6 @@
 class Solution:
-    # O(nlogn)
     def countBits(self, n: int) -> List[int]:
-        result = []
-        for num in range(n+1):
-            count = self.bit_count(num)
-            result.append(count)
-        return result
-    
-    def bit_count(self, n: int) -> int:
-        count = 0
-        while n != 0:
-            count = count + (n&1)
-            n = n >> 1
+        count = [0]
+        for num in range(1, n+1):
+            count.append(count[num >> 1] + num%2)
         return count
