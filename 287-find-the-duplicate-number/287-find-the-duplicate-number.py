@@ -1,8 +1,12 @@
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
-        counter = Counter(nums)
-        for key, count in counter.most_common():
-            if count == 1:
-                break
-            return key
-        return -1
+        slow = fast = nums[0]
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            if slow == fast:
+                slow = nums[0]
+                while slow != fast:
+                    slow = nums[slow]
+                    fast = nums[fast]
+                return fast
