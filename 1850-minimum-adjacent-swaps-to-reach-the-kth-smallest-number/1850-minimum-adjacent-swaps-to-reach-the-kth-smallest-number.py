@@ -6,6 +6,12 @@ class Solution:
         count = 0
         num = list(num)
         length = len(num)
+        return self.numberOfSwaps(list_of_num, num)
+    
+    def numberOfSwaps(self, list_of_num, num) -> int:
+        count = 0
+        num = list(num)
+        length = len(num)
         # Simply Compairing Number
         for i in range(length):
             j = i
