@@ -5,6 +5,21 @@
 #         self.next = next
 class Solution:
     def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        # Distance from last and end is same
+        first = second = head
+        # Move `first` to kth from start
+        for index in range(1,k):
+            first = first.next
+        temp = first
+        # Now move from `first` till end and also move second
+        # Once `first` hits end second will be at kth from end of list since distance is same
+        while temp.next:
+            second = second.next
+            temp = temp.next
+        first.val, second.val = second.val, first.val
+        return head
+    
+    def swapNodesOld(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         arr = []
         while head:
             arr.append(head.val)
