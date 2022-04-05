@@ -6,16 +6,11 @@
 #         self.right = right
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        arr = []
-        self.inorder(root, arr)
-        for index in range(1, len(arr)):
-            if arr[index] <= arr[index-1]:
+        def recursion(root, floor = -float("inf"), ceil = float("inf")):
+            if root is None:
+                return True
+            if root.val <= floor or root.val >= ceil:
                 return False
-        return True
-        
-    def inorder(self, root, arr):
-        if not root:
-            return
-        self.inorder(root.left, arr)
-        arr.append(root.val)
-        self.inorder(root.right, arr)
+            return recursion(root.left, floor , root.val) and recursion(root.right, root.val, ceil)
+        return recursion(root)
+            
