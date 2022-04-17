@@ -6,23 +6,15 @@
 #         self.right = right
 class Solution:
     def increasingBST(self, root: TreeNode) -> TreeNode:
-        values = []
-        def recursion(root, values):
+        def recursion(root):
             if not root:
                 return
-            recursion(root.left, values)
-            values.append(root.val)
-            recursion(root.right, values)
-        recursion(root, values)
-        return self.build_skewed(values)
-
-    def build_skewed(self, values):
-        root = temp = None
-        for value in values:
-            node = TreeNode(value)
-            if root is None:
-                root = temp = node
-            else:
-                temp.right = node
-                temp = node
-        return root
+            recursion(root.left)
+            root.left = None
+            self.current.right = root
+            self.current = root
+            recursion(root.right)
+        head = self.current = TreeNode()
+        recursion(root)
+        return head.right
+            
