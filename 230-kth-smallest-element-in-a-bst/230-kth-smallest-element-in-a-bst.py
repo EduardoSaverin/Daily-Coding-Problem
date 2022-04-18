@@ -16,6 +16,7 @@ class Solution:
             l[0] = l[0]+1
             if l[0] == k:
                 result = root.val
+                return
             traverse(root.right, l)
         traverse(root, l)
         return result
