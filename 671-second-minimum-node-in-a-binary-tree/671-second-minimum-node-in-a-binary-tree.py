@@ -14,9 +14,9 @@ class Solution:
                 return
             if result > root.val and minimum < root.val:
                 result = root.val
-            else:
-                traverse(root.left)
-                traverse(root.right)
+                return
+            traverse(root.left)
+            traverse(root.right)
         traverse(root)
         return result if result != float("inf") else -1
             
