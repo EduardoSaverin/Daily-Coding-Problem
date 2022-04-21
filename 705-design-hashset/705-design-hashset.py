@@ -1,16 +1,29 @@
 class MyHashSet:
 
     def __init__(self):
-        self.arr = [0]*(10**6+1)
+        self.size = 10**4
+        self.arr = [None]*(self.size)
+        
+    def hash(self, key):
+        return key  % self.size
 
     def add(self, key: int) -> None:
-        self.arr[key] = 1
+        h = self.hash(key)
+        if self.arr[h] is None:
+            self.arr[h] = [key]
+        else:
+            self.arr[h].append(key)
 
     def remove(self, key: int) -> None:
-        self.arr[key] = 0
+        h = self.hash(key)
+        if self.arr[h] is not None:
+            while key in self.arr[h]:
+                self.arr[h].remove(key)
 
     def contains(self, key: int) -> bool:
-        return self.arr[key] == 1
+        h = self.hash(key)
+        if self.arr[h] is not None:
+            return key in self.arr[h]
 
 
 # Your MyHashSet object will be instantiated and called as such:
